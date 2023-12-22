@@ -4,7 +4,7 @@ import {Right} from "@/components/icons/Right";
 
 export const Hero = () => {
     return (
-        <section className="hero">
+        <section className="hero px-10">
             <div className="py-12">
                 <h1 className="text-4xl font-semibold">
                     Everything<br />
