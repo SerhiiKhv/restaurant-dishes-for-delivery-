@@ -45,7 +45,8 @@ export default function LoginPage() {
             </div>
 
 
-            <button className="flex gap-4 justify-center max-w-xl mx-auto">
+            <button onClick={() => signIn('google')}
+                    className="flex gap-4 justify-center max-w-xl mx-auto">
                 <Image src={'/google.png'} alt={"google"} width={24} height={24}/>
                 Login with google
             </button>

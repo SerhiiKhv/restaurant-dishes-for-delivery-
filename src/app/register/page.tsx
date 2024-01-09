@@ -3,6 +3,7 @@
 import React, {useState} from 'react';
 import Image from "next/image";
 import Link from "next/link";
+import {signIn} from "next-auth/react";
 
 export default function RegisterPage() {
 
@@ -61,11 +62,11 @@ export default function RegisterPage() {
                 or login with provider
             </div>
 
-
-                <button className="flex gap-4 justify-center max-w-xl mx-auto">
-                    <Image src={'/google.png'} alt={"google"} width={24} height={24}/>
-                    Login with google
-                </button>
+            <button onClick={() => signIn('google')}
+                    className="flex gap-4 justify-center max-w-xl mx-auto">
+                <Image src={'/google.png'} alt={"google"} width={24} height={24}/>
+                Login with google
+            </button>
 
             <div className="text-center my-4 text-gray-500">
                 Existing account?{' '}
