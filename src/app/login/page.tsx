@@ -1,37 +1,26 @@
 "use client";
 
-import React, {useState} from 'react';
+import React, {useState} from "react";
 import Image from "next/image";
 import Link from "next/link";
+import {signIn} from "next-auth/react";
 
-export default function RegisterPage() {
+export default function LoginPage() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [userName, setUserName] = useState('');
-    const [creatingUser, setCreatingUser] = useState(false)
     const [error, setError] = useState(false)
 
     async function handleFormSubmit(ev) {
         ev.preventDefault();
-        setCreatingUser(true)
-        try {
-            await fetch('/api/register', {
-                method: 'POST',
-                body: JSON.stringify({email, password, name: userName}),
-                headers: {'Content-Type': 'application/json'}
-            });
-            setCreatingUser(false)
-        } catch (e) {
-            setError(true)
-        }
 
+        await signIn("credentials", {email, password})
     }
 
     return (
         <section className="mt-8">
             <h1 className="text-center text-primary text-4xl">
-                Register
+                Login
             </h1>
 
             {error && (
@@ -42,19 +31,13 @@ export default function RegisterPage() {
             )}
 
             <form className="block max-w-xl mx-auto" onSubmit={handleFormSubmit}>
-                <input type="text" placeholder="name" value={userName}
-                       disabled={creatingUser}
-                       onChange={ev => setUserName(ev.target.value)}/>
-
                 <input type="email" placeholder="email" value={email}
-                       disabled={creatingUser}
                        onChange={ev => setEmail(ev.target.value)}/>
 
                 <input type="password" placeholder="password" value={password}
-                       disabled={creatingUser}
                        onChange={ev => setPassword(ev.target.value)}/>
 
-                <button type="submit" disabled={creatingUser}>Register</button>
+                <button type="submit">Login</button>
             </form>
 
             <div className="my-4 text-gray-500 text-center">
@@ -62,15 +45,15 @@ export default function RegisterPage() {
             </div>
 
 
-                <button className="flex gap-4 justify-center max-w-xl mx-auto">
-                    <Image src={'/google.png'} alt={"google"} width={24} height={24}/>
-                    Login with google
-                </button>
+            <button className="flex gap-4 justify-center max-w-xl mx-auto">
+                <Image src={'/google.png'} alt={"google"} width={24} height={24}/>
+                Login with google
+            </button>
 
             <div className="text-center my-4 text-gray-500">
                 Existing account?{' '}
-                <Link className="underline" href={'/login'}>Login here &raquo;</Link>
+                <Link className="underline" href={'/register'}>Register here &raquo;</Link>
             </div>
         </section>
-    );
+    )
 }
