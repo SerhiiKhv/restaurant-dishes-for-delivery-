@@ -7,8 +7,11 @@ export const Header = () => {
     const session = useSession()
     const status = session.status
 
-    const userName = session.data?.user?.name;
-
+    const userData = session.data?.user
+    let userName = userData?.name || userData?.email
+    if(userName && userName.includes(" ")){
+        userName = userName?.split(' ')[0]
+    }
 
     return (
         <header className="flex items-center justify-between">
@@ -28,7 +31,8 @@ export const Header = () => {
             <nav className="gap-2 flex items-center font-semibold">
                 {status === "authenticated" && (
                     <>
-                        <p>{userName}</p>
+                        <Link href={'/profile'}><p>{userName}</p></Link>
+
                         <button
                                 onClick={() => signOut()}
                                 className="bg-primary text-white px-4 py-2 rounded-full">

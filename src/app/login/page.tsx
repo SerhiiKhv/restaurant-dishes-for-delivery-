@@ -11,10 +11,15 @@ export default function LoginPage() {
     const [password, setPassword] = useState('');
     const [error, setError] = useState(false)
 
-    async function handleFormSubmit(ev) {
+    async function handleFormSubmit(ev: any) {
         ev.preventDefault();
 
-        await signIn("credentials", {email, password})
+        try {
+            await signIn("credentials", { email, password, callbackUrl:'/' });
+        } catch (error) {
+            console.error("Error during form submission:", error);
+            setError(true);
+        }
     }
 
     return (
@@ -30,7 +35,7 @@ export default function LoginPage() {
                 </div>
             )}
 
-            <form className="block max-w-xl mx-auto" onSubmit={handleFormSubmit}>
+            <form className="block max-w-sm mx-auto" onSubmit={handleFormSubmit}>
                 <input type="email" placeholder="email" value={email}
                        onChange={ev => setEmail(ev.target.value)}/>
 
@@ -45,8 +50,10 @@ export default function LoginPage() {
             </div>
 
 
-            <button onClick={() => signIn('google')}
-                    className="flex gap-4 justify-center max-w-xl mx-auto">
+            <button
+                    onClick={() => signIn('google', {callbackUrl:'/'})}
+                    type="button"
+                    className="flex gap-4 justify-center max-w-sm mx-auto">
                 <Image src={'/google.png'} alt={"google"} width={24} height={24}/>
                 Login with google
             </button>

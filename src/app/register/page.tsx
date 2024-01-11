@@ -42,7 +42,7 @@ export default function RegisterPage() {
                 </div>
             )}
 
-            <form className="block max-w-xl mx-auto" onSubmit={handleFormSubmit}>
+            <form className="block max-w-sm mx-auto" onSubmit={handleFormSubmit}>
                 <input type="text" placeholder="name" value={userName}
                        disabled={creatingUser}
                        onChange={ev => setUserName(ev.target.value)}/>
@@ -62,8 +62,8 @@ export default function RegisterPage() {
                 or login with provider
             </div>
 
-            <button onClick={() => signIn('google')}
-                    className="flex gap-4 justify-center max-w-xl mx-auto">
+            <button onClick={() => signIn('google', {callbackUrl:'/'})}
+                    className="flex gap-4 justify-center max-w-sm mx-auto">
                 <Image src={'/google.png'} alt={"google"} width={24} height={24}/>
                 Login with google
             </button>

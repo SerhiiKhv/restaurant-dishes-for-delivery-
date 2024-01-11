@@ -1,6 +1,7 @@
 import {Hero} from "@/components/layout/Hero";
 import {HomeMenu} from "@/components/layout/HomeMenu";
 import {SectionHeader} from "@/components/layout/SectionHeader";
+import React from "react";
 
 export default function Home() {
     return (
@@ -39,6 +40,11 @@ export default function Home() {
                         +380 684 300 807
                     </a>
                 </div>
+
+                <footer className="border-t p-8 text-center text-gray-500
+            mt-16 ">
+                    &copy; 2024 All rights reserved
+                </footer>
             </section>
         </>
     )
