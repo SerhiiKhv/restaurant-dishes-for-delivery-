@@ -6,9 +6,9 @@ const UserSchema = new Schema({
     password: {
         type: String,
         required: true,
-        validate: pass => {
+        validate: (pass: string) => {
             if (!pass?.length || pass.length < 5) {
-                throw new Error('password must be at least 5 characters'); // Fix: Use 'throw' to throw an error
+                throw new Error('password must be at least 5 characters');
             }
         }
     },
@@ -21,4 +21,4 @@ UserSchema.post('validate', function (user){
     user.password = bcrypt.hashSync(notHashedPassword, salt);
 })
 
-export const User = models.User || model("User", UserSchema); // Fix: Use a colon (:) instead of a question mark (?)
+export const User = models.User || model("User", UserSchema);
