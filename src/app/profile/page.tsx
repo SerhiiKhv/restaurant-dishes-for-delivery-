@@ -3,16 +3,34 @@
 import {useSession} from "next-auth/react";
 import {redirect} from "next/navigation";
 import Image from "next/image";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
+import toast from "react-hot-toast";
 
 export default function ProfilePage() {
 
     const session = useSession()
     const {status} = session
 
-    const [userName, setUserName] = useState(String(session.data?.user?.name))
-    const [saveProfile, setSaveProfile] = useState(false)
-    const [isSaveProfile, setIsSaveProfile] = useState(false)
+    const [userName, setUserName] = useState('')
+    const [streetAddress, setStreetAddress] = useState('')
+    const [userImage, setUserImage] = useState('/pizza.png')
+    const [phoneNumber, setPhoneNumber] = useState('')
+
+    useEffect(() => {
+        if (status === 'authenticated') {
+            setUserName(String(session.data?.user?.name))
+            setUserImage(String(session.data?.user?.image))
+
+            fetch('/api/profile').then(response => {
+                response.json().then(data => {
+                    setUserName(data.name)
+                    setUserImage(data.image)
+                    setStreetAddress(data.address)
+                    setPhoneNumber(data.phone)
+                })
+            })
+        }
+    }, [session, status])
 
     if (status === 'loading') {
         return "Loading..."
@@ -22,33 +40,47 @@ export default function ProfilePage() {
         redirect('/login')
     }
 
-    let userImage = session.data?.user?.image
-
-    if (!userImage) {
-        userImage = "/pizza.png"
-    }
-
     async function handleProfileInfoUpdate(ev: any) {
         ev.preventDefault();
-        setIsSaveProfile(true)
-        setSaveProfile(false)
-        const response = await fetch('/api/profile', {
-            method: 'PUT',
-            body: JSON.stringify({name: userName}),
-            headers: {'Content-Type': 'application/json'}
+
+        const savingPromise = new Promise<void>(async (resolve, reject) => {
+            try {
+                const response = await fetch('/api/profile', {
+                    method: 'PUT',
+                    body: JSON.stringify(
+                        {
+                            name: userName,
+                            address: streetAddress,
+                            phone: phoneNumber,
+                        }
+                    ),
+                    headers: {'Content-Type': 'application/json'}
+                });
+
+                if (response.ok) {
+                    resolve();
+                } else {
+                    reject();
+                }
+            } catch (error) {
+                reject(error);
+            }
         });
-        setIsSaveProfile(false)
-        if (response.ok) {
-            setSaveProfile(true)
-            setTimeout(() => setSaveProfile(false), 5000)
-        }
+
+        await toast.promise(savingPromise, {
+            loading: 'Saving...',
+            success: 'Profile save!',
+            error: 'Error save'
+        })
+
     }
 
+
     async function handleChangePhoto(e: any) {
-        const files = e?.files
-        if (files?.length > 0){
+        const files = e.target.files
+        if (files?.length === 1) {
             const data = new FormData
-            data.set('files', files)
+            data.set('files', files[0])
             await fetch("/api/upload", {
                 method: 'POST',
                 body: data,
@@ -63,24 +95,11 @@ export default function ProfilePage() {
                 Profile
             </h1>
 
-            {saveProfile &&
-                <h2 className="m-2 text-center text-2xl bg-green-100 border-green-300 rounded-2xl">
-                    Profile saved
-                </h2>
-            }
-
-            {isSaveProfile &&
-                <h2 className="m-2 text-center text-2xl bg-blue-100 border-blue-300 rounded-2xl">
-                    Saving...
-                </h2>
-            }
-
-
             <form className="border rounded-xl p-2" onSubmit={handleProfileInfoUpdate}>
                 <div className="flex gap-4 items-center">
                     <div className="bg-gray-100 p-2 rounded-2xl items-center">
                         <div>
-                            <Image src={userImage} alt={"avatar"} width={250} height={250}
+                            <Image src={userImage || '/pizza.png'} alt={"avatar"} width={250} height={250}
                                    className="rounded-xl w-full h-full mb-1"/>
                         </div>
                         <label>
@@ -97,6 +116,14 @@ export default function ProfilePage() {
 
                         <input type="email" placeholder="Email" disabled={true}
                                value={String(session.data?.user?.email)}/>
+
+                        <input type="text" placeholder="Street address"
+                               onChange={e => setStreetAddress(e.target.value)}
+                               value={streetAddress}/>
+
+                        <input type="text" placeholder="Phone number"
+                               onChange={e => setPhoneNumber(e.target.value)}
+                               value={phoneNumber}/>
                         <button type="submit">Save</button>
                     </div>
                 </div>
