@@ -9,10 +9,23 @@ export async function PUT(req: any) {
     const session = await getServerSession(authOptions)
     const email = session?.user?.email
 
-    if ("name" in data) {
-        //update user name
-        await User.updateOne({email}, {name: data.name})
-    }
+    await User.updateOne({email}, data)
 
     return Response.json(true)
+}
+
+export async function GET(req: any) {
+    await mongoose.connect(String(process.env.MONGO_URL));
+    const session = await getServerSession(authOptions);
+    if (session) {
+        const email = session.user?.email;
+        if (email) {
+            const user = await User.findOne({email});
+            return Response.json(user);
+        } else {
+            return Response.json({error: "Email not found in session"}, {status: 400});
+        }
+    } else {
+        return Response.json({error: "Session not found"}, {status: 400});
+    }
 }
