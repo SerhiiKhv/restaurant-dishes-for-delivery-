@@ -13,7 +13,7 @@ export default function RegisterPage() {
     const [creatingUser, setCreatingUser] = useState(false)
     const [error, setError] = useState(false)
 
-    async function handleFormSubmit(ev) {
+    async function handleFormSubmit(ev: any) {
         ev.preventDefault();
         setCreatingUser(true)
         try {

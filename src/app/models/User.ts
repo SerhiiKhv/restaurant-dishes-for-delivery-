@@ -13,6 +13,8 @@ const UserSchema = new Schema({
         }
     },
     name: {type: String, required: true},
+    address: {type: String},
+    phone: {type: String},
 });
 
 UserSchema.post('validate', function (user){
