@@ -3,18 +3,11 @@ import bcrypt from "bcrypt"
 
 const UserSchema = new Schema({
     email: { type: String, required: true, unique: true },
-    password: {
-        type: String,
-        required: true,
-        validate: (pass: string) => {
-            if (!pass?.length || pass.length < 5) {
-                throw new Error('password must be at least 5 characters');
-            }
-        }
-    },
+    password: { type: String, required: true},
     name: {type: String, required: true},
     address: {type: String},
     phone: {type: String},
+    admin: {type: Boolean, default: false},
 });
 
 UserSchema.post('validate', function (user){

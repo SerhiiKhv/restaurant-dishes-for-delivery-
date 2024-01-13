@@ -5,6 +5,7 @@ import {redirect} from "next/navigation";
 import Image from "next/image";
 import React, {useEffect, useState} from "react";
 import toast from "react-hot-toast";
+import UserTabs from "@/components/layout/Tabs";
 
 export default function ProfilePage() {
 
@@ -15,24 +16,25 @@ export default function ProfilePage() {
     const [streetAddress, setStreetAddress] = useState('')
     const [userImage, setUserImage] = useState('/pizza.png')
     const [phoneNumber, setPhoneNumber] = useState('')
+    const [isAdmin, setIsAdmin] = useState(false)
+    const [profileFetched, setProfileFetched] = useState(false)
 
     useEffect(() => {
         if (status === 'authenticated') {
-            setUserName(String(session.data?.user?.name))
-            setUserImage(String(session.data?.user?.image))
-
             fetch('/api/profile').then(response => {
                 response.json().then(data => {
                     setUserName(data.name)
                     setUserImage(data.image)
                     setStreetAddress(data.address)
                     setPhoneNumber(data.phone)
+                    setProfileFetched(true)
+                    setIsAdmin(data.admin)
                 })
             })
         }
     }, [session, status])
 
-    if (status === 'loading') {
+    if (status === 'loading' || !profileFetched) {
         return "Loading..."
     }
 
@@ -90,12 +92,10 @@ export default function ProfilePage() {
     }
 
     return (
-        <section className="mx-auto max-w-md">
-            <h1 className="text-center text-primary text-4xl">
-                Profile
-            </h1>
+        <section className="mx-auto max-w-md mt-8">
+            <UserTabs isAdmin={isAdmin}/>
 
-            <form className="border rounded-xl p-2" onSubmit={handleProfileInfoUpdate}>
+            <form className="border rounded-xl p-2 mt-4" onSubmit={handleProfileInfoUpdate}>
                 <div className="flex gap-4 items-center">
                     <div className="bg-gray-100 p-2 rounded-2xl items-center">
                         <div>
