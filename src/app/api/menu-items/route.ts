@@ -8,6 +8,13 @@ export async function POST(req: any) {
     return Response.json(menuItemDoc)
 }
 
+export async function PUT(req: any) {
+    await mongoose.connect(String(process.env.MONGO_URL));
+    const {_id, ...data} = await req.json()
+    await MenuItem.findByIdAndUpdate(_id, data)
+    return Response.json(true)
+}
+
 export async function GET() {
     await mongoose.connect(String(process.env.MONGO_URL));
     return Response.json(

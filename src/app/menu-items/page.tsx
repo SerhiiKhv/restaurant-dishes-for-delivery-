@@ -51,7 +51,10 @@ export default function MenuItemsPage() {
                                 //setCategoryName(c.name)
                             }}
                             className="bg-gray-200 rounded-xl px-4 py-2 gap-2 cursor-pointer mb-2">
-                            <span key={c._id}>{c.name}</span>
+                            <Link href={`/menu-items/edit/${c._id}`}>
+                                <span key={c._id}>{c.name}</span>
+                            </Link>
+
                         </button>
                     ))}
                 </div>

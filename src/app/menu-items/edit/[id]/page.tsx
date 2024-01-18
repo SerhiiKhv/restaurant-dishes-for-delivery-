@@ -2,11 +2,13 @@
 
 import {useProfile} from "@/components/UseProfile";
 import UserTabs from "@/components/layout/Tabs";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import toast from "react-hot-toast";
+import {useParams} from "next/navigation";
 
-export default function NewMenuItemsPage(){
+export default function EditMenuItemsPage(){
 
+    const {id} = useParams()
     const {loading, data} = useProfile();
 
     const [name, setName] = useState("")
@@ -14,6 +16,17 @@ export default function NewMenuItemsPage(){
     const [price, setPrice] = useState(0)
     const [image, setImage] = useState("")
 
+    useEffect(() => {
+        fetch('/api/menu-items').then(res => {
+            res.json().then(items => {
+                const item = items.find((i: any) => i._id === id)
+                setName(item.name)
+                setDescription(item.description)
+                setPrice(item.price)
+                setImage(item.image)
+            })
+        })
+    }, []);
 
     async function handleFormSubmit(e: any){
         e.preventDefault()
@@ -23,7 +36,7 @@ export default function NewMenuItemsPage(){
                 const data = {name, description, price, image}
 
                 const response = await fetch('/api/menu-items', {
-                    method: 'POST',
+                    method: 'PUT',
                     body: JSON.stringify(data),
                     headers: {'Content-Type': 'application/json'}
                 })
