@@ -29,11 +29,11 @@ input[type="text"]:disabled {
 }
 
 label + input{
-    margin-top: -2px;
+    margin-top: -200px;
 }
 
 label{
-    @apply text-gray-500 text-sm leading-tight
+    @apply text-gray-500 text-sm leading-tight;
 }
 
 button, .button {

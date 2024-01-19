@@ -4,6 +4,8 @@ import {useProfile} from "@/components/UseProfile";
 import UserTabs from "@/components/layout/Tabs";
 import {useState} from "react";
 import toast from "react-hot-toast";
+import MenuItemForm from "@/components/layout/MenuItemForm";
+import {MenuItemType} from "@/components/Types/MenuItem";
 
 export default function NewMenuItemsPage(){
 
@@ -15,12 +17,11 @@ export default function NewMenuItemsPage(){
     const [image, setImage] = useState("")
 
 
-    async function handleFormSubmit(e: any){
+    async function handleFormSubmit(e: any, data: MenuItemType){
         e.preventDefault()
 
         const creatingPromise = new Promise<void>(async (resolve, reject) => {
             try {
-                const data = {name, description, price, image}
 
                 const response = await fetch('/api/menu-items', {
                     method: 'POST',
@@ -58,34 +59,8 @@ export default function NewMenuItemsPage(){
         <section>
             <UserTabs isAdmin={true}/>
 
-            <form className="mt-8 max-w-md mx-auto" onSubmit={handleFormSubmit}>
-                <div className="grid grid-cols-2">
 
-                    <div className="bg-gray-200 m-4 rounded-2xl text-center">
-                        No image
-                    </div>
-
-                    <div className="flex gap-2 items-end">
-                        <div className="grow">
-                            <label>Menu item name </label>
-                            <input type="text" value={name}
-                                   onChange={(e) => setName(e.target.value)}/>
-
-                            <label>Description </label>
-                            <input type="text" value={description}
-                                   onChange={(e) => setDescription(e.target.value)}/>
-
-                            <label>Base price </label>
-                            <input type="number" value={price}
-                                   onChange={(e) => setPrice(+e.target.value)}/>
-                        </div>
-                    </div>
-                </div>
-
-                <button type="submit">
-                    Save
-                </button>
-            </form>
+            <MenuItemForm onSubmit={handleFormSubmit} menuItem={null}/>
         </section>
     )
 }
