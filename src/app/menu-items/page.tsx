@@ -10,11 +10,12 @@ export default function MenuItemsPage() {
 
     const {loading, data} = useProfile();
 
-    const [menuItems,setMenuItems] = useState([])
+    const [menuItems, setMenuItems] = useState([])
 
     useEffect(() => {
         fetchMenuItems()
     }, [])
+
     function fetchMenuItems() {
         fetch('/api/menu-items').then(res => {
             res.json().then(menuItem => {
@@ -45,17 +46,12 @@ export default function MenuItemsPage() {
                 <div>
                     <h2 className="text-gray-500">Menu items: </h2>
                     {menuItems?.length > 0 && menuItems.map((c: MenuItemType) => (
-                        <button
-                            onClick={() => {
-                                //setEditedCategory((c))
-                                //setCategoryName(c.name)
-                            }}
-                            className="bg-gray-200 rounded-xl px-4 py-2 gap-2 cursor-pointer mb-2">
+                        <div className="bg-gray-200 rounded-xl px-4 py-2 gap-2 cursor-pointer mb-2">
                             <Link href={`/menu-items/edit/${c._id}`}>
                                 <span key={c._id}>{c.name}</span>
                             </Link>
+                        </div>
 
-                        </button>
                     ))}
                 </div>
             </div>

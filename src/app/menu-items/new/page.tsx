@@ -2,27 +2,19 @@
 
 import {useProfile} from "@/components/UseProfile";
 import UserTabs from "@/components/layout/Tabs";
-import {useState} from "react";
 import toast from "react-hot-toast";
 import MenuItemForm from "@/components/layout/MenuItemForm";
 import {MenuItemType} from "@/components/Types/MenuItem";
 
-export default function NewMenuItemsPage(){
+export default function NewMenuItemsPage() {
 
     const {loading, data} = useProfile();
 
-    const [name, setName] = useState("")
-    const [description, setDescription] = useState("")
-    const [price, setPrice] = useState(0)
-    const [image, setImage] = useState("")
-
-
-    async function handleFormSubmit(e: any, data: MenuItemType){
+    async function handleFormSubmit(e: any, data: MenuItemType) {
         e.preventDefault()
 
         const creatingPromise = new Promise<void>(async (resolve, reject) => {
             try {
-
                 const response = await fetch('/api/menu-items', {
                     method: 'POST',
                     body: JSON.stringify(data),
@@ -55,10 +47,9 @@ export default function NewMenuItemsPage(){
         return "Not an admin"
     }
 
-    return(
+    return (
         <section>
             <UserTabs isAdmin={true}/>
-
 
             <MenuItemForm onSubmit={handleFormSubmit} menuItem={null}/>
         </section>

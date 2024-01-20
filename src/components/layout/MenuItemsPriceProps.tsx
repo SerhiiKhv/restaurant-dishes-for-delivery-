@@ -1,17 +1,18 @@
 import React from "react";
+import {ExtraPriceType} from "@/components/Types/MenuItem";
 
-export default function MenuItemsPriceProps({name, props, setProps}:
+export default function MenuItemsPriceProps({name, props, setProps, buttonName}:
                                                 {
                                                     name: string
-                                                    props: { name: string; price: string }[],
-                                                    setProps: any
+                                                    props: ExtraPriceType[],
+                                                    setProps: any,
+                                                    buttonName: string
                                                 }) {
     function addSize() {
         setProps((oldSizes: any) => {
             return [...oldSizes, {name: '', price: ''}]
         })
     }
-
     function editSize(e: React.ChangeEvent<HTMLInputElement>, index: number, prop: keyof {
         name: string;
         price: number
@@ -44,7 +45,7 @@ export default function MenuItemsPriceProps({name, props, setProps}:
 
                     <div>
                         <label>Extra price</label>
-                        <input type="text" placeholder="Extra price"
+                        <input type="number" placeholder="Extra price"
                                value={size.price}
                                onChange={e => editSize(e, index, 'price')}/>
                     </div>
@@ -61,7 +62,7 @@ export default function MenuItemsPriceProps({name, props, setProps}:
             <button className=""
                     type="button"
                     onClick={addSize}>
-                Add size(like medium or large)
+                {buttonName}
             </button>
         </div>
     )
