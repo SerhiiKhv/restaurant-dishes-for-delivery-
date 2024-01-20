@@ -8,7 +8,8 @@ export type MenuItemType = {
     _id: string,
     description: string,
     price: number,
-    image: string
+    image: string,
+    category: string
     sizes: [ExtraPriceType],
     ingredients: [ExtraPriceType],
 }

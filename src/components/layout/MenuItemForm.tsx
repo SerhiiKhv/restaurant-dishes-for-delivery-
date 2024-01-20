@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {ExtraPriceType, MenuItemType} from "@/components/Types/MenuItem";
 import MenuItemsPriceProps from "@/components/layout/MenuItemsPriceProps";
+import {CategoriesType} from "@/components/Types/CategoriesType";
 
 export default function MenuItemForm({onSubmit, menuItem}: { onSubmit: any, menuItem: MenuItemType | null }) {
 
@@ -11,6 +12,8 @@ export default function MenuItemForm({onSubmit, menuItem}: { onSubmit: any, menu
     const [image, setImage] = useState(menuItem?.image || "")
     const [sizes, setSizes] = useState<ExtraPriceType[]>(menuItem?.sizes || []);
     const [ingredients, setIngredients] = useState<ExtraPriceType[]>(menuItem?.ingredients || []);
+    const [category, setCategory] = useState(menuItem?.category || "");
+    const [categories, setCategories] = useState([]);
 
 
     useEffect(() => {
@@ -21,15 +24,22 @@ export default function MenuItemForm({onSubmit, menuItem}: { onSubmit: any, menu
         setId(menuItem?._id || "")
         setSizes(menuItem?.sizes || [])
         setIngredients(menuItem?.ingredients || [])
-
-        console.log(sizes)
+        setCategory(menuItem?.category || "")
     }, [menuItem]);
+
+    useEffect(() => {
+        fetch('/api/categories').then(res => {
+            res.json().then(categories => {
+                setCategories(categories)
+            })
+        })
+    }, []);
 
 
     return (
         <form className="mt-8 max-w-md mx-auto"
               onSubmit={e => onSubmit(e,
-                  {_id, name, description, price, image, sizes, ingredients}
+                  {_id, name, description, price, image, sizes, ingredients, category}
               )}
         >
             <div className="grid grid-cols-2">
@@ -47,6 +57,15 @@ export default function MenuItemForm({onSubmit, menuItem}: { onSubmit: any, menu
                         <label>Description </label>
                         <input type="text" value={description}
                                onChange={(e) => setDescription(e.target.value)}/>
+
+                        <label>Category</label>
+                        <select value={category}
+                        onChange={e => setCategory(e.target.value)}>
+                            {categories?.length > 0 && categories.map((c: CategoriesType) => (
+                                <option value={c._id}>{c.name}</option>
+                            ))}
+                        </select>
+
 
                         <label>Base price </label>
                         <input type="number" value={price}
