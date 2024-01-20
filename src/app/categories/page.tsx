@@ -33,6 +33,32 @@ export default function CategoriesPage() {
         return "Not an admin"
     }
 
+    async function handleCategoryDelete(_id: string) {
+        const creatingPromise = new Promise<void>(async (resolve, reject) => {
+            try {
+                console.log(_id)
+                const response = await fetch('/api/categories?_id='+_id, {
+                    method: 'DELETE',
+                })
+
+                fetchCategories()
+                if (response.ok) {
+                    resolve();
+                } else {
+                    reject();
+                }
+            } catch (error) {
+                reject(error);
+            }
+        })
+
+        await toast.promise(creatingPromise, {
+            loading: 'Creating deleting',
+            success: 'Category delete!',
+            error: 'Error'
+        })
+    }
+
     async function handleCategorySubmit(e: any) {
         e.preventDefault();
 
@@ -101,14 +127,29 @@ export default function CategoriesPage() {
             <div>
                 <h2 className="text-gray-500">edit category: </h2>
                 {categories?.length > 0 && categories.map((c: CategoriesType) => (
-                    <button
-                        onClick={() => {
-                            setEditedCategory((c))
-                            setCategoryName(c.name)
-                        }}
-                        className="bg-gray-200 rounded-xl px-4 py-2 gap-2 cursor-pointer mb-2">
-                        <span key={c._id}>{c.name}</span>
-                    </button>
+                    <div  className="bg-gray-200 rounded-xl px-4 py-2 gap-2 cursor-pointer mb-2">
+                        <div
+                            className="flex graw "
+                            onClick={() => {
+                                setEditedCategory((c))
+                                setCategoryName(c.name)
+                            }}>
+                            <span key={c._id}>{c.name}</span>
+
+                            <div>
+                               {/* <button
+                                    className="rounded-xl px-4 py-2 gap-2 cursor-pointer mb-2">
+                                    edit
+                                </button>*/}
+                                <button
+                                    type="button"
+                                    onClick={() => handleCategoryDelete(c._id)}
+                                    className="bg-white rounded-xl px-4 py-2 gap-2 cursor-pointer mb-2">
+                                    delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 ))}
             </div>
         </section>
