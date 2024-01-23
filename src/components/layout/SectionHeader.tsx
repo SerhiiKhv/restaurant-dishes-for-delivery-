@@ -1,4 +1,4 @@
-export const SectionHeader = ({subHeader, mainHeader}) => {
+export const SectionHeader = ({subHeader, mainHeader}: {subHeader: any, mainHeader: any}) => {
     return(
         <>
             <h3 className="uppercase text-gray-500 font-semibold leading-4">
