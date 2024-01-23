@@ -15,7 +15,7 @@ export const Hero = () => {
                     </span>
                 </h1>
                 <p className="my-4 text-gray-500 text-sm">
-                    Pizza is blablalbalblalballb
+                    Pizza for you
                 </p>
 
                 <div className="flex gap-4">
