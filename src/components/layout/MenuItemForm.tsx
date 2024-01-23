@@ -12,7 +12,7 @@ export default function MenuItemForm({onSubmit, menuItem}: { onSubmit: any, menu
     const [image, setImage] = useState(menuItem?.image || "")
     const [sizes, setSizes] = useState<ExtraPriceType[]>(menuItem?.sizes || []);
     const [ingredients, setIngredients] = useState<ExtraPriceType[]>(menuItem?.ingredients || []);
-    const [category, setCategory] = useState(menuItem?.category || "");
+    const [category, setCategory] = useState(menuItem?.category || "Pizza");
     const [categories, setCategories] = useState([]);
 
 
@@ -24,7 +24,7 @@ export default function MenuItemForm({onSubmit, menuItem}: { onSubmit: any, menu
         setId(menuItem?._id || "")
         setSizes(menuItem?.sizes || [])
         setIngredients(menuItem?.ingredients || [])
-        setCategory(menuItem?.category || "")
+        setCategory(menuItem?.category || "Pizza")
     }, [menuItem]);
 
     useEffect(() => {

@@ -47,9 +47,9 @@ export default function EditUserPage() {
         });
 
         await toast.promise(savingPromise, {
-            loading: 'Saving...',
-            success: 'Profile save!',
-            error: 'Error save'
+            loading: 'Editing...',
+            success: 'User edit!',
+            error: 'Error edit'
         })
 
     }
