@@ -4,6 +4,7 @@ import Link from "next/link";
 import {signOut, useSession} from "next-auth/react";
 import {useContext} from "react";
 import {CartContext} from "@/components/AppContext";
+import ShoppingCart from "@/components/icons/ShoppingCart";
 
 export const Header = () => {
     const session = useSession()
@@ -12,9 +13,9 @@ export const Header = () => {
     const userData = session.data?.user
     let userName = userData?.name || userData?.email
 
-    const { cartProducts } = useContext(CartContext) as any;
+    const {cartProducts} = useContext(CartContext) as any;
 
-    if(userName && userName.includes(" ")){
+    if (userName && userName.includes(" ")) {
         userName = userName?.split(' ')[0]
     }
 
@@ -32,15 +33,14 @@ export const Header = () => {
             </nav>
 
 
-
-            <nav className="gap-2 flex items-center font-semibold">
+            <nav className="gap-2 flex items-center font-semibold px-2">
                 {status === "authenticated" && (
                     <>
                         <Link href={'/profile'}><p>{userName}</p></Link>
 
                         <button
-                                onClick={() => signOut()}
-                                className="bg-primary text-white px-4 py-2 rounded-full">
+                            onClick={() => signOut()}
+                            className="bg-primary text-white px-4 py-2 rounded-full">
                             Logout
                         </button>
                     </>
@@ -57,8 +57,13 @@ export const Header = () => {
                     </>
                 )}
 
-                    <Link href={'/cart'}>Cart ({cartProducts.length})</Link>
-
+                <Link href={'/cart'} className="relative">
+                    <ShoppingCart/>
+                    <span className="absolute bg-primary -top-2 -right-4 text-white
+                    text-xs py-1 px-2 rounded-full leading-3">
+                    {cartProducts.length}
+                    </span>
+                </Link>
             </nav>
         </header>
     )

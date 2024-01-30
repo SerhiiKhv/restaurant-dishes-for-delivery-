@@ -15,14 +15,13 @@ export const MenuItem = (menuItem: any) => {
     const {addToCart} = useContext(CartContext) as any
 
     const [showPopUp, setShowPopUp] = useState(false)
-    const [selectedSize, setSelectedSize] = useState(sizes[0]?.price || null)
+    const [selectedSize, setSelectedSize] = useState(null)
     const [selectedExtras, setSelectedExtras] = useState<any[]>([])
-
     function handleAddToCartButtonClick() {
         if (!showPopUp) {
             setShowPopUp(true)
             return
-        }else{
+        } else {
             addToCart(menuItem, selectedSize, selectedExtras)
             setShowPopUp(false)
             toast.success('Added to cart!')
@@ -55,7 +54,7 @@ export const MenuItem = (menuItem: any) => {
             {showPopUp && (
                 <div
                     onClick={() => setShowPopUp(false)}
-                    className="fixed inset-0 bg-black/20 flex items-center justify-center">
+                    className="fixed inset-0 bg-black/80 flex items-center justify-center">
                     <div
                         onClick={e => e.stopPropagation()}
                         className="bg-white p-4 rounded-lg max-h-screen ">
@@ -99,7 +98,7 @@ export const MenuItem = (menuItem: any) => {
 
                             <button type="button"
                                     className="bg-primary text-white"
-                                    onClick={() => handleAddToCartButtonClick}>
+                                    onClick={handleAddToCartButtonClick}>
                                 Add to cart {selectedPrice}
                             </button>
 
