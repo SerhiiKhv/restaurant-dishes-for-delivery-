@@ -4,12 +4,9 @@ import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import { User } from "@/app/models/User";
 import GoogleProvider from "next-auth/providers/google";
-import { MongoDBAdapter } from "@auth/mongodb-adapter";
-import clientPromise from "@/libs/mongoConnect";
 
 export const authOptions = {
     secret: process.env.SECRET,
-    //adapter: MongoDBAdapter(clientPromise),
     providers: [
         GoogleProvider({
             clientId: String(process.env.GOOGLE_CLIENT_ID),
@@ -25,21 +22,26 @@ export const authOptions = {
                 name: { label: "UserName", type: "text" },
             },
             async authorize(credentials, req) {
-                const email = credentials?.email;
-                const password = credentials?.password;
-
                 await mongoose.connect(String(process.env.MONGO_URL));
-                const user = await User.findOne({ email });
-                const passwordOk = bcrypt.compareSync(String(password), user.password);
 
-                if (passwordOk) {
-                    return user;
+                try{
+                    const email = credentials?.email;
+                    const password = credentials?.password;
+
+                    const user = await User.findOne({ email });
+
+                    if(user) {
+                        const passwordOk = bcrypt.compareSync(String(password), user.password);
+                        if (passwordOk) {
+                            return user;
+                        }
+                    }
+                }catch(err: any){
+                    throw new Error(err)
                 }
-
-                return null;
             },
         }),
-    ],
+    ]
 };
 
 const handler = NextAuth(authOptions);

@@ -12,10 +12,10 @@
   resolved "https://registry.npmjs.org/@alloc/quick-lru/-/quick-lru-5.2.0.tgz"
   integrity sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==
 
-"@auth/core@0.20.0":
-  version "0.20.0"
-  resolved "https://registry.npmjs.org/@auth/core/-/core-0.20.0.tgz"
-  integrity sha512-04lQH58H5d/9xQ63MOTDTOC7sXWYlr/RhJ97wfFLXzll7nYyCKbkrT3ZMdzdLC5O+qt90sQDK85TAtLlcZ2WBg==
+"@auth/core@0.25.0":
+  version "0.25.0"
+  resolved "https://registry.npmjs.org/@auth/core/-/core-0.25.0.tgz"
+  integrity sha512-UxENsD+WNlY1NOFsr3Ygc7F1Ypbia8VCd9NU8cbAhSJ0Z8dtyZ0xmssRo1G3ZW50QnW0AaAMuYzY5oumnPMQzA==
   dependencies:
     "@panva/hkdf" "^1.1.1"
     "@types/cookie" "0.6.0"
@@ -25,12 +25,12 @@
     preact "10.11.3"
     preact-render-to-string "5.2.3"
 
-"@auth/mongodb-adapter@^2.0.12":
-  version "2.0.12"
-  resolved "https://registry.npmjs.org/@auth/mongodb-adapter/-/mongodb-adapter-2.0.12.tgz"
-  integrity sha512-iN+HygM6T9MBGzlA0Xs18YR4qQgNwibdBzW1b8+q/3bENSFbXBkmCZCQtbrgFM2Du2R5m5FozvUfnWe0SzJT5g==
+"@auth/mongodb-adapter@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.npmjs.org/@auth/mongodb-adapter/-/mongodb-adapter-2.2.0.tgz"
+  integrity sha512-nEr8EHtHG9iPXRc//zTvP2FycPyW73FQQBPEYXdKpd+jqZZqfDD5rDoj33tV9nlR8bRboaql4IzTz+Wo6JJ94Q==
   dependencies:
-    "@auth/core" "0.20.0"
+    "@auth/core" "0.25.0"
 
 "@babel/runtime@^7.20.13":
   version "7.23.6"
@@ -1681,9 +1681,9 @@ jose@^4.11.4, jose@^4.15.1:
   integrity sha512-W+oqK4H+r5sITxfxpSU+MMdr/YSWGvgZMQDIsNoBDGGy4i7GBPTtvFKibQzW06n3U3TqHjhvBJsirShsEJ6eeQ==
 
 jose@^5.1.3:
-  version "5.2.0"
-  resolved "https://registry.npmjs.org/jose/-/jose-5.2.0.tgz"
-  integrity sha512-oW3PCnvyrcm1HMvGTzqjxxfnEs9EoFOFWi2HsEGhlFVOXxTE3K9GKWVMFoFw06yPUqwpvEWic1BmtUZBI/tIjw==
+  version "5.2.1"
+  resolved "https://registry.npmjs.org/jose/-/jose-5.2.1.tgz"
+  integrity sha512-qiaQhtQRw6YrOaOj0v59h3R6hUY9NvxBmmnMfKemkqYmBB0tEc97NbLP7ix44VP5p9/0YHG8Vyhzuo5YBNwviA==
 
 "js-tokens@^3.0.0 || ^4.0.0":
   version "4.0.0"
@@ -2040,9 +2040,9 @@ oauth@^0.9.15:
   integrity sha512-a5ERWK1kh38ExDEfoO6qUHJb32rd7aYmPHuyCu3Fta/cnICvYmgd2uhuKXvPD+PXB+gCEYYEaQdIRAjCOwAKNA==
 
 oauth4webapi@^2.4.0:
-  version "2.5.0"
-  resolved "https://registry.npmjs.org/oauth4webapi/-/oauth4webapi-2.5.0.tgz"
-  integrity sha512-72EWwDzXY3oiadPsWn89EvavYFyiZgsD/tf7nKKmZwFaUg70k2S4bsYFrwbnaaQah8ZlOkCah63tLhD8AvbHcA==
+  version "2.9.0"
+  resolved "https://registry.npmjs.org/oauth4webapi/-/oauth4webapi-2.9.0.tgz"
+  integrity sha512-vW5gWU6SEt9sgZU/Oz6s8b8qc2qdwBMegfrY6IobOKEjCz4/73wvd8CESo2FL2WBrJSCJbK28xkFErvYu48Pig==
 
 object-assign@^4.0.1, object-assign@^4.1.1:
   version "4.1.1"

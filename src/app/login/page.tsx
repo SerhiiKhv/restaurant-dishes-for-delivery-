@@ -1,26 +1,46 @@
 "use client";
 
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Image from "next/image";
 import Link from "next/link";
-import {signIn} from "next-auth/react";
+import {signIn, useSession} from "next-auth/react";
+import {useRouter} from "next/navigation";
 
 export default function LoginPage() {
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState(false)
+    const [error, setError] = useState<String>('')
+    const router = useRouter()
+    const session = useSession()
 
-    async function handleFormSubmit(ev: any) {
-        ev.preventDefault();
-
-        try {
-            await signIn("credentials", { email, password, callbackUrl:'/' });
-        } catch (error) {
-            console.error("Error during form submission:", error);
-            setError(true);
+    useEffect(() => {
+        if (session?.status === "authenticated") {
+            router.replace("/");
         }
-    }
+    }, [session, router]);
+
+    const handleFormSubmit = async (e: any) => {
+        e.preventDefault();
+        if (!password || password.length < 0) {
+            setError("Password is invalid");
+            return;
+        }
+
+        const res = await signIn("credentials", {
+            redirect: false,
+            email,
+            password,
+        });
+
+        if (res?.error) {
+            setError("Invalid email or password");
+            if (res?.url) router.replace("/");
+        } else {
+            setError("");
+        }
+    };
+
+
 
     return (
         <section className="mt-8">
@@ -30,8 +50,7 @@ export default function LoginPage() {
 
             {error && (
                 <div className="my-4 text-center">
-                    An error has occurred.<br/>
-                    Please try again later
+                    {error}
                 </div>
             )}
 
@@ -45,15 +64,20 @@ export default function LoginPage() {
                 <button type="submit">Login</button>
             </form>
 
+            {/*<div className="text-center my-4 text-gray-500">
+                Forgot password?
+                <Link className="underline" href={'/forget-password'}>Forgot password here &raquo;</Link>
+            </div>*/}
+
             <div className="my-4 text-gray-500 text-center">
                 or login with provider
             </div>
 
 
             <button
-                    onClick={() => signIn('google', {callbackUrl:'/'})}
-                    type="button"
-                    className="flex gap-4 justify-center max-w-sm mx-auto">
+                onClick={() => signIn('google', {callbackUrl: '/'})}
+                type="button"
+                className="flex gap-4 justify-center max-w-sm mx-auto">
                 <Image src={'/google.png'} alt={"google"} width={24} height={24}/>
                 Login with google
             </button>
