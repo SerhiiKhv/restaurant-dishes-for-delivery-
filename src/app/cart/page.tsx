@@ -16,8 +16,6 @@ export default function CartPage() {
         total += cartProductPrice(p)
     }
 
-    //console.log(cartProducts)
-
     return (
         <section className="mt-8">
             <SectionHeader mainHeader="Cart"/>
