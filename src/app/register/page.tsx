@@ -4,6 +4,8 @@ import React, {useState} from 'react';
 import Image from "next/image";
 import Link from "next/link";
 import {signIn} from "next-auth/react";
+import toast from "react-hot-toast";
+import {useRouter} from "next/navigation";
 
 export default function RegisterPage() {
 
@@ -11,21 +13,39 @@ export default function RegisterPage() {
     const [password, setPassword] = useState('');
     const [userName, setUserName] = useState('');
     const [creatingUser, setCreatingUser] = useState(false)
-    const [error, setError] = useState(false)
+
+    const router = useRouter()
 
     async function handleFormSubmit(ev: any) {
         ev.preventDefault();
         setCreatingUser(true)
-        try {
-            await fetch('/api/register', {
-                method: 'POST',
-                body: JSON.stringify({email, password, name: userName}),
-                headers: {'Content-Type': 'application/json'}
-            });
-            setCreatingUser(false)
-        } catch (e) {
-            setError(true)
-        }
+
+        const creatingPromise = new Promise<void>(async (resolve, reject) => {
+            try {
+                const response =  await fetch('/api/register', {
+                    method: 'POST',
+                    body: JSON.stringify({email, password, name: userName}),
+                    headers: {'Content-Type': 'application/json'}
+                });
+                setCreatingUser(false)
+
+                if (response.ok) {
+                    resolve();
+                } else {
+                    reject();
+                }
+
+                router.replace("/login");
+            } catch (error) {
+                reject(error);
+            }
+        })
+
+        await toast.promise(creatingPromise, {
+            loading: 'Register...',
+            success: 'Register success!',
+            error: 'Error'
+        })
 
     }
 
@@ -34,14 +54,6 @@ export default function RegisterPage() {
             <h1 className="text-center text-primary text-4xl">
                 Register
             </h1>
-
-            {error && (
-                <div className="my-4 text-center">
-                    An error has occurred.<br/>
-                    Please try again later
-                </div>
-            )}
-
             <form className="block max-w-sm mx-auto" onSubmit={handleFormSubmit}>
                 <input type="text" placeholder="name" value={userName}
                        disabled={creatingUser}
