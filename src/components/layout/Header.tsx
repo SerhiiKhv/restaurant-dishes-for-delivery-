@@ -20,8 +20,9 @@ export const Header = () => {
     }
 
     return (
-        <header className="flex items-center justify-between">
-            <Link className="text-primary font-semibold text-2xl" href="/">
+        <header className="flex items-center justify-between p-4">
+            <Link className="bg-gradient-to-r from-neonNazar to-blue-600 bg-clip-text text-transparent
+            font-semibold text-2xl" href="/">
                 EAT AND DON'T WAKE UP
             </Link>
 
@@ -40,7 +41,7 @@ export const Header = () => {
 
                         <button
                             onClick={() => signOut()}
-                            className="bg-primary text-white px-4 py-2 rounded-full">
+                            className="bg-neonNazar text-white px-4 py-2 rounded-full">
                             Logout
                         </button>
                     </>
@@ -51,7 +52,8 @@ export const Header = () => {
                         <Link href={'/login'} className="">
                             Login
                         </Link>
-                        <Link href={'/register'} className="bg-primary text-white px-4 py-2 rounded-full">
+                        <Link href={'/register'} className="bg-gradient-to-br from-neonNazar to-blue-600
+                         text-white px-4 py-2 rounded-full">
                             Register
                         </Link>
                     </>
@@ -59,7 +61,7 @@ export const Header = () => {
 
                 <Link href={'/cart'} className="relative">
                     <ShoppingCart/>
-                    <span className="absolute bg-primary -top-2 -right-4 text-white
+                    <span className="absolute bg-gradient-to-br from-neonNazar to-blue-600 -top-2 -right-4 text-white
                     text-xs py-1 px-2 rounded-full leading-3">
                     {cartProducts.length}
                     </span>

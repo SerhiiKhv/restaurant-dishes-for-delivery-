@@ -47,7 +47,7 @@ button, .button {
 
 button[type="submit"],
 .submit {
-    @apply border-0 bg-primary text-white
+    @apply border-0 bg-gradient-to-br from-neonNazar to-blue-600 text-white
 }
 
 button[type="submit"]:disabled,
@@ -60,5 +60,5 @@ div.tabs > * {
 }
 
 div.tabs > *.active {
-    @apply bg-primary text-white
+    @apply bg-neonNazar text-white
 }

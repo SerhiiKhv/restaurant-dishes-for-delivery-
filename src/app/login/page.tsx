@@ -43,48 +43,51 @@ export default function LoginPage() {
 
 
     return (
-        <section className="mt-8">
-            <h1 className="text-center text-primary text-4xl">
-                Login
-            </h1>
+        <section className="mt-36">
+            <div className="border rounded-2xl max-w-sm mx-auto p-8 ">
+                <h1 className="text-center text-4xl bg-gradient-to-r from-neonNazar to-blue-600 bg-clip-text text-transparent
+                font-semibold">
+                    Login
+                </h1>
 
-            {error && (
-                <div className="my-4 text-center">
-                    {error}
+                <form className="block max-w-sm mx-auto" onSubmit={handleFormSubmit}>
+                    <input type="email" placeholder="email" value={email}
+                           onChange={ev => setEmail(ev.target.value)}/>
+
+                    <input type="password" placeholder="password" value={password}
+                           onChange={ev => setPassword(ev.target.value)}/>
+
+                    <button type="submit">Login</button>
+                </form>
+
+                {error && (
+                    <div className="bg-gradient-to-br from-red-800 to-pink-400 my-4 text-center
+                    text-white rounded-2xl p-2">
+                        {error}
+                    </div>
+                )}
+
+                <div className="text-right my-4 text-gray-500 text-sm">
+                    <Link className="underline" href={'/forget-password'}>Forgot password?</Link>
                 </div>
-            )}
 
-            <form className="block max-w-sm mx-auto" onSubmit={handleFormSubmit}>
-                <input type="email" placeholder="email" value={email}
-                       onChange={ev => setEmail(ev.target.value)}/>
-
-                <input type="password" placeholder="password" value={password}
-                       onChange={ev => setPassword(ev.target.value)}/>
-
-                <button type="submit">Login</button>
-            </form>
-
-            {/*<div className="text-center my-4 text-gray-500">
-                Forgot password?
-                <Link className="underline" href={'/forget-password'}>Forgot password here &raquo;</Link>
-            </div>*/}
-
-            <div className="my-4 text-gray-500 text-center">
-                or login with provider
-            </div>
+                <div className="my-4 text-gray-500 text-center">
+                    or login with provider
+                </div>
 
 
-            <button
-                onClick={() => signIn('google', {callbackUrl: '/'})}
-                type="button"
-                className="flex gap-4 justify-center max-w-sm mx-auto">
-                <Image src={'/google.png'} alt={"google"} width={24} height={24}/>
-                Login with google
-            </button>
+                <div
+                    onClick={() => signIn('google', {callbackUrl: '/'})}
+                    className="flex gap-4 justify-center max-w-sm mx-auto cursor-pointer">
+                    <Image
+                        className="rounded-full"
+                        src={'/google.svg.webp'} alt={"google"} width={48} height={48}/>
+                </div>
 
-            <div className="text-center my-4 text-gray-500">
-                Existing account?{' '}
-                <Link className="underline" href={'/register'}>Register here &raquo;</Link>
+                <div className="text-center my-4 text-gray-500">
+                    Existing account?{' '}
+                    <Link className="underline" href={'/register'}>Register here &raquo;</Link>
+                </div>
             </div>
         </section>
     )
