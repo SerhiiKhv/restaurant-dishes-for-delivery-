@@ -5,11 +5,16 @@ import Image from "next/image";
 import Link from "next/link";
 import {signIn, useSession} from "next-auth/react";
 import {useRouter} from "next/navigation";
+import {ErrorType} from "@/components/Types/Errors";
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState<String>('')
+    const [errors, setErrors] = useState<ErrorType>({ userName: '', email: '', password: '' });
+    const [isFormValid, setIsFormValid] = useState(false);
+    const [inputFocused, setInputFocused] = useState('');
+
     const router = useRouter()
     const session = useSession()
 
@@ -41,23 +46,66 @@ export default function LoginPage() {
     };
 
 
+    const handleInputFocus = (fieldName: string) => {
+        setInputFocused(fieldName);
+        setErrors(prev => ({ ...prev, [fieldName]: '' }));
+    };
+
+    const handleInputBlur = () => {
+        setInputFocused('');
+        validateForm();
+    };
+
+
+    const validateForm = () => {
+        const newErrors = {...errors}
+
+        if (inputFocused === 'email') {
+            if (!email) {
+                newErrors.email = 'Email is required.';
+            } else if (!/\S+@\S+\.\S+/.test(email)) {
+                newErrors.email = 'Email is invalid.';
+            }
+        }
+
+        if (inputFocused === 'password') {
+            if (!password) {
+                newErrors.password = 'Password is required.';
+            } else if (password.length < 6) {
+                newErrors.password = 'Password must be at least 6 characters.';
+            }
+        }
+
+        setErrors(newErrors);
+        setIsFormValid(!!newErrors.email || !!newErrors.password || !!newErrors.userName);
+    };
+
 
     return (
         <section className="mt-36">
             <div className="border rounded-2xl max-w-sm mx-auto p-8 ">
-                <h1 className="text-center text-4xl bg-gradient-to-r from-neonNazar to-blue-600 bg-clip-text text-transparent
-                font-semibold">
+                <h1 className="text-center text-4xl gradientText font-semibold py-1">
                     Login
                 </h1>
 
                 <form className="block max-w-sm mx-auto" onSubmit={handleFormSubmit}>
-                    <input type="email" placeholder="email" value={email}
-                           onChange={ev => setEmail(ev.target.value)}/>
+                    {errors.email && <p className="text-red-500 -mb-4">{errors.email}</p>}
+                    <input type="email"
+                           placeholder="email"
+                           value={email}
+                           onChange={ev => setEmail(ev.target.value)}
+                           onFocus={() => handleInputFocus('email')}
+                           onBlur={handleInputBlur}/>
 
-                    <input type="password" placeholder="password" value={password}
-                           onChange={ev => setPassword(ev.target.value)}/>
+                    {errors.password && <p className="text-red-500 -mb-4">{errors.password}</p>}
+                    <input type="password"
+                           placeholder="password"
+                           value={password}
+                           onChange={ev => setPassword(ev.target.value)}
+                           onFocus={() => handleInputFocus('password')}
+                           onBlur={handleInputBlur}/>
 
-                    <button type="submit">Login</button>
+                    <button type="submit" disabled={isFormValid}>Login</button>
                 </form>
 
                 {error && (
@@ -76,13 +124,11 @@ export default function LoginPage() {
                 </div>
 
 
-                <div
-                    onClick={() => signIn('google', {callbackUrl: '/'})}
-                    className="flex gap-4 justify-center max-w-sm mx-auto cursor-pointer">
-                    <Image
-                        className="rounded-full"
-                        src={'/google.svg.webp'} alt={"google"} width={48} height={48}/>
-                </div>
+                <button onClick={() => signIn('google', {callbackUrl: '/'})}
+                        className="flex gap-4 justify-center max-w-sm mx-auto">
+                    <Image src={'/google.svg.webp'} alt={"google"} width={24} height={24}/>
+                    Login with google
+                </button>
 
                 <div className="text-center my-4 text-gray-500">
                     Existing account?{' '}

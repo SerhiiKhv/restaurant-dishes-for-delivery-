@@ -62,3 +62,7 @@ div.tabs > * {
 div.tabs > *.active {
     @apply bg-neonNazar text-white
 }
+
+.gradientText {
+    @apply bg-gradient-to-r from-neonNazar to-blue-600 bg-clip-text text-transparent
+}
