@@ -40,7 +40,8 @@ export default function ProfilePage() {
     }
 
     async function handleProfileInfoUpdate(ev: any,
-                                           {name, address, phone}:  {name: string, address: string, phone: string}
+                                           {name, address, phone, image}
+                                               :{name: string, address: string, phone: string, image: string}
     ) {
         ev.preventDefault();
 
@@ -49,7 +50,7 @@ export default function ProfilePage() {
                 const response = await fetch('/api/profile', {
                     method: 'PUT',
                     body: JSON.stringify(
-                        {name,address,phone}
+                        {name,address,phone,image}
                     ),
                     headers: {'Content-Type': 'application/json'}
                 });

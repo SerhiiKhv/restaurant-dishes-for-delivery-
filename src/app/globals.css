@@ -41,7 +41,7 @@ label{
 }
 
 button, .button {
-    @apply block w-full text-gray-700 font-semibold;
+    @apply block w-full font-semibold bg-gradient-to-br from-neonNazar to-blue-600 text-white;
     @apply border border-gray-300 rounded-xl px-6 py-2
 }
 
@@ -60,7 +60,7 @@ div.tabs > * {
 }
 
 div.tabs > *.active {
-    @apply bg-neonNazar text-white
+    @apply bg-gradient-to-br from-neonNazar to-blue-600 text-white
 }
 
 .gradientText {

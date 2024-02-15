@@ -20,7 +20,7 @@ export async function PUT(req: any) {
 
     await User.updateOne(filter, data)
 
-    return Response.json(true)
+    return Response.json(data)
 }
 
 export async function GET(req: any) {

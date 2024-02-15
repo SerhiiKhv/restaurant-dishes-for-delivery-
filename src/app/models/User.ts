@@ -7,6 +7,7 @@ const UserSchema = new Schema({
     name: {type: String, required: true},
     address: {type: String},
     phone: {type: String},
+    image: {type: String},
     admin: {type: Boolean, default: false},
     resetToken: {type: String, required: false},
     resetTokenExpiry: {type: String, required: false}
