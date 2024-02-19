@@ -5,6 +5,8 @@ import {useProfile} from "@/components/UseProfile";
 import {useEffect, useState} from "react";
 import toast from "react-hot-toast";
 import {CategoriesType} from "@/components/Types/CategoriesType";
+import {Delete} from "@/components/icons/Delete";
+import {Edit} from "@/components/icons/Edit";
 
 export default function CategoriesPage() {
 
@@ -127,25 +129,28 @@ export default function CategoriesPage() {
             <div>
                 <h2 className="text-gray-500">edit category: </h2>
                 {categories?.length > 0 && categories.map((c: CategoriesType) => (
-                    <div  className="bg-gray-200 rounded-xl px-4 py-2 gap-2 cursor-pointer mb-2">
+                    <div className="bg-gray-200 rounded-xl px-4 py-1 gap-2 cursor-pointer mb-2">
                         <div
-                            className="flex graw "
-                            onClick={() => {
-                                setEditedCategory((c))
-                                setCategoryName(c.name)
-                            }}>
+                            className="flex graw justify-between items-center"
+                           >
                             <span key={c._id}>{c.name}</span>
 
-                            <div>
-                               {/* <button
-                                    className="rounded-xl px-4 py-2 gap-2 cursor-pointer mb-2">
+                            <div className="flex gap-1">
+                                <button
+                                    className="flex rounded-xl px-4 py-2 gap-2 cursor-pointer"
+                                    onClick={() => {
+                                        setEditedCategory((c))
+                                        setCategoryName(c.name)
+                                    }}>
                                     edit
-                                </button>*/}
+                                    <Edit />
+                                </button>
                                 <button
                                     type="button"
                                     onClick={() => handleCategoryDelete(c._id)}
-                                    className="bg-white rounded-xl px-4 py-2 gap-2 cursor-pointer mb-2">
+                                    className="flex bg-white rounded-xl px-4 py-2 cursor-pointer text-black">
                                     delete
+                                    <Delete />
                                 </button>
                             </div>
                         </div>

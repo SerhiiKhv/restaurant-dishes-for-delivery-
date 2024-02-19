@@ -50,6 +50,12 @@ button[type="submit"],
     @apply border-0 bg-gradient-to-br from-neonNazar to-blue-600 text-white
 }
 
+button[type="button"],
+.delete {
+    @apply border-0 bg-gradient-to-br from-red-700 to-pink-400 text-white
+}
+
+
 button[type="submit"]:disabled,
 .submit:disabled {
     @apply cursor-not-allowed bg-red-400
