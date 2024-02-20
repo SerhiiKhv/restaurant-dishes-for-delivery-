@@ -49,17 +49,21 @@ export default function UserProfileForm(
                                        image={userImage} setIsFormValid={setIsFormValid}/>
 
                     <div className="grow">
+                        <label>Name</label>
                         <input type="text" placeholder="First and last name"
                                onChange={e => setUserName(e.target.value)}
                                value={userName}/>
 
+                        <label>Email</label>
                         <input type="email" placeholder="Email" disabled={true}
                                value={userEmail}/>
 
+                        <label>Street address</label>
                         <input type="text" placeholder="Street address"
                                onChange={e => setStreetAddress(e.target.value)}
                                value={streetAddress}/>
 
+                        <label>Phone number</label>
                         <input type="text" placeholder="Phone number"
                                onChange={e => setPhoneNumber(e.target.value)}
                                value={phoneNumber}/>

@@ -15,6 +15,7 @@ section.hero {
 
 label + select,
 label + input[type="text"],
+label + input[type="email"],
 label + input[type="number"]{
     margin-top: -2px;
 }
