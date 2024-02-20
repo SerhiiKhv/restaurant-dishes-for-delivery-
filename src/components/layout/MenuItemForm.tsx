@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import {ExtraPriceType, MenuItemType} from "@/components/Types/MenuItem";
 import MenuItemsPriceProps from "@/components/layout/MenuItemsPriceProps";
 import {CategoriesType} from "@/components/Types/CategoriesType";
+import Image from "next/image";
+import AddedImageViaLink from "@/components/layout/AddedImageViaLink";
 
 export default function MenuItemForm({onSubmit, menuItem}: { onSubmit: any, menuItem: MenuItemType | null }) {
 
@@ -15,6 +17,8 @@ export default function MenuItemForm({onSubmit, menuItem}: { onSubmit: any, menu
     const [category, setCategory] = useState(menuItem?.category || "Pizza");
     const [categories, setCategories] = useState([]);
 
+    const [photoLink, setPhotoLink] = useState(menuItem?.image || '')
+    const [isFormValid, setIsFormValid] = useState(false);
 
     useEffect(() => {
         setName(menuItem?.name || "")
@@ -25,6 +29,7 @@ export default function MenuItemForm({onSubmit, menuItem}: { onSubmit: any, menu
         setSizes(menuItem?.sizes || [])
         setIngredients(menuItem?.ingredients || [])
         setCategory(menuItem?.category || "Pizza")
+        setPhotoLink(menuItem?.image || "")
     }, [menuItem]);
 
     useEffect(() => {
@@ -39,14 +44,13 @@ export default function MenuItemForm({onSubmit, menuItem}: { onSubmit: any, menu
     return (
         <form className="mt-8 max-w-md mx-auto"
               onSubmit={e => onSubmit(e,
-                  {_id, name, description, price, image, sizes, ingredients, category}
+                  {_id, name, description, price, image: photoLink, sizes, ingredients, category}
               )}
         >
-            <div className="grid grid-cols-2">
+            <div className="grid grid-cols-2 gap-2">
 
-                <div className="bg-gray-200 m-4 rounded-2xl text-center">
-                    No image
-                </div>
+                <AddedImageViaLink photoLink={photoLink} setPhotoLink={setPhotoLink}
+                                   image={image} setIsFormValid={setIsFormValid}/>
 
                 <div className="flex gap-2 items-end">
                     <div className="grow">
@@ -60,7 +64,7 @@ export default function MenuItemForm({onSubmit, menuItem}: { onSubmit: any, menu
 
                         <label>Category</label>
                         <select value={category}
-                        onChange={e => setCategory(e.target.value)}>
+                                onChange={e => setCategory(e.target.value)}>
                             {categories?.length > 0 && categories.map((c: CategoriesType) => (
                                 <option value={c._id}>{c.name}</option>
                             ))}
@@ -84,7 +88,8 @@ export default function MenuItemForm({onSubmit, menuItem}: { onSubmit: any, menu
                                  setProps={setIngredients}
                                  buttonName={'Add ingredients prices'}/>
 
-            <button type="submit">
+            <button type="submit"
+                    disabled={isFormValid}>
                 Save
             </button>
         </form>

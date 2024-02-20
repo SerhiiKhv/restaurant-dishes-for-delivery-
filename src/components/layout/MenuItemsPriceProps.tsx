@@ -1,5 +1,6 @@
 import React from "react";
 import {ExtraPriceType} from "@/components/Types/MenuItem";
+import {Delete} from "@/components/icons/Delete";
 
 export default function MenuItemsPriceProps({name, props, setProps, buttonName}:
                                                 {
@@ -53,13 +54,14 @@ export default function MenuItemsPriceProps({name, props, setProps, buttonName}:
                         <button
                             type="button"
                             onClick={() => removeSize(index)}
-                            className="bg-white mb-4">x
+                            className="delete mb-4">
+                            <Delete/>
                         </button>
                     </div>
                 </div>
             ))}
 
-            <button className=""
+            <button className="button"
                     type="button"
                     onClick={addSize}>
                 {buttonName}

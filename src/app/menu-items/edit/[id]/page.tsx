@@ -14,6 +14,7 @@ export default function EditMenuItemsPage() {
     const {loading, data} = useProfile();
 
     const [menuItems, setMenuItems] = useState(null)
+    const [saveChange, setSaveChange] = useState(false)
 
     useEffect(() => {
         fetch('/api/menu-items').then(res => {
@@ -22,11 +23,11 @@ export default function EditMenuItemsPage() {
                 setMenuItems(item)
             })
         })
-    }, []);
+    }, [saveChange]);
 
     async function handleFormSubmit(e: any, data: MenuItemType) {
         e.preventDefault()
-
+        setSaveChange(true)
         const creatingPromise = new Promise<void>(async (resolve, reject) => {
             try {
                 const response = await fetch('/api/menu-items', {
@@ -43,6 +44,7 @@ export default function EditMenuItemsPage() {
             } catch (error) {
                 reject(error);
             }
+            setSaveChange(false)
         })
 
         await toast.promise(creatingPromise, {

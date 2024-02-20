@@ -52,7 +52,7 @@ export default function MenuItemsPage() {
                                  key={c._id}>
                                 <Link href={`/menu-items/edit/${c._id}`}>
                                     <Image src={c.image || '/pizza.png'} alt={"Img menu item"} width={250} height={250}
-                                           className="rounded-xl  mb-1"/>
+                                           className="rounded-xl mb-1 aspect-square object-cover"/>
                                     <span>{c.name}</span>
                                 </Link>
                             </div>

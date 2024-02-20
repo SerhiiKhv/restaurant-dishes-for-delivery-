@@ -148,7 +148,7 @@ export default function CategoriesPage() {
                                 <button
                                     type="button"
                                     onClick={() => handleCategoryDelete(c._id)}
-                                    className="flex bg-white rounded-xl px-4 py-2 cursor-pointer text-black">
+                                    className="delete flex bg-white rounded-xl px-4 py-2 cursor-pointer text-black">
                                     delete
                                     <Delete />
                                 </button>
