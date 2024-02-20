@@ -50,7 +50,7 @@ button[type="submit"],
     @apply border-0 bg-gradient-to-br from-neonNazar to-blue-600 text-white
 }
 
-button[type="button"],
+button.delete,
 .delete {
     @apply border-0 bg-gradient-to-br from-red-700 to-pink-400 text-white
 }

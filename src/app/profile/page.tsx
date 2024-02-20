@@ -29,7 +29,7 @@ export default function ProfilePage() {
                 })
             })
         }
-    }, [session, status])
+    }, [session, status, userData])
 
     if (status === 'loading' || !profileFetched) {
         return "Loading..."
