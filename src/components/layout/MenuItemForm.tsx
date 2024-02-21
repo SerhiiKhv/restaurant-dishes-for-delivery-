@@ -42,25 +42,28 @@ export default function MenuItemForm({onSubmit, menuItem}: { onSubmit: any, menu
 
 
     return (
-        <form className="mt-8 max-w-md mx-auto"
+        <form className="p-4 mx-auto"
               onSubmit={e => onSubmit(e,
                   {_id, name, description, price, image: photoLink, sizes, ingredients, category}
               )}
         >
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-[1fr,1fr,1fr] gap-2">
 
                 <AddedImageViaLink photoLink={photoLink} setPhotoLink={setPhotoLink}
                                    image={image} setIsFormValid={setIsFormValid}/>
 
-                <div className="flex gap-2 items-end">
+                <div className="flex gap-2">
                     <div className="grow">
                         <label>Menu item name </label>
                         <input type="text" value={name}
                                onChange={(e) => setName(e.target.value)}/>
 
-                        <label>Description </label>
-                        <input type="text" value={description}
-                               onChange={(e) => setDescription(e.target.value)}/>
+                        <label>Description</label>
+                        <textarea
+                            className="w-full h-96 resize-none"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                        />
 
                         <label>Category</label>
                         <select value={category}
@@ -69,29 +72,30 @@ export default function MenuItemForm({onSubmit, menuItem}: { onSubmit: any, menu
                                 <option value={c._id}>{c.name}</option>
                             ))}
                         </select>
-
-
-                        <label>Base price </label>
-                        <input type="number" value={price}
-                               onChange={(e) => setPrice(+e.target.value)}/>
                     </div>
+                </div>
+
+                <div className="grid grid-rows-2">
+                    <MenuItemsPriceProps name={'Sizes'}
+                                         props={sizes}
+                                         setProps={setSizes}
+                                         buttonName={'Add item size'}/>
+
+                    <MenuItemsPriceProps name={'Extra ingredients'}
+                                         props={ingredients}
+                                         setProps={setIngredients}
+                                         buttonName={'Add ingredients prices'}/>
                 </div>
             </div>
 
-            <MenuItemsPriceProps name={'Sizes'}
-                                 props={sizes}
-                                 setProps={setSizes}
-                                 buttonName={'Add item size'}/>
+            <div className="flex items-center justify-center">
+                <button type="submit"
+                        className="mt-2 max-w-lg"
+                        disabled={isFormValid}>
+                    Save
+                </button>
+            </div>
 
-            <MenuItemsPriceProps name={'Extra ingredients'}
-                                 props={ingredients}
-                                 setProps={setIngredients}
-                                 buttonName={'Add ingredients prices'}/>
-
-            <button type="submit"
-                    disabled={isFormValid}>
-                Save
-            </button>
         </form>
     )
 }

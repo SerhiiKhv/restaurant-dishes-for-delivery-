@@ -43,12 +43,12 @@ export default function UserProfileForm(
             <form className="border rounded-xl p-2 mt-4"
                   onSubmit={e =>
                       onSave(e, {name: userName, address: streetAddress, phone: phoneNumber, image: photoLink})}>
-                <div className="flex gap-4 items-center">
+                <div className="grid grid-cols-2 gap-1">
 
                     <AddedImageViaLink photoLink={photoLink} setPhotoLink={setPhotoLink}
                                        image={userImage} setIsFormValid={setIsFormValid}/>
 
-                    <div className="grow">
+                    <div>
                         <label>Name</label>
                         <input type="text" placeholder="First and last name"
                                onChange={e => setUserName(e.target.value)}
@@ -67,6 +67,7 @@ export default function UserProfileForm(
                         <input type="text" placeholder="Phone number"
                                onChange={e => setPhoneNumber(e.target.value)}
                                value={phoneNumber}/>
+
                         <button type="submit"
                                 disabled={isFormValid}>
                             Save

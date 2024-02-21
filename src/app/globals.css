@@ -16,7 +16,8 @@ section.hero {
 label + select,
 label + input[type="text"],
 label + input[type="email"],
-label + input[type="number"]{
+label + input[type="number"],
+label + textarea{
     margin-top: -2px;
 }
 
@@ -25,7 +26,8 @@ select,
 input[type="email"],
 input[type="password"],
 input[type="number"],
-input[type="text"] {
+input[type="text"],
+textarea{
     @apply block w-full my-4 rounded-xl;
     @apply border p-2 border-gray-300 bg-gray-100;
 }
@@ -41,9 +43,10 @@ label{
     @apply text-gray-500 text-sm leading-tight;
 }
 
-button, .button {
-    @apply block w-full font-semibold bg-gradient-to-br from-neonNazar to-blue-600 text-white;
-    @apply border border-gray-300 rounded-xl px-6 py-2
+button,
+.button {
+    @apply  w-full font-semibold bg-gradient-to-br from-neonNazar to-blue-600 text-white;
+    @apply border border-gray-300 rounded-xl py-2 px-4
 }
 
 button[type="submit"],
